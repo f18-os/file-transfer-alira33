@@ -1,14 +1,22 @@
 #! /usr/bin/env python3
 
 # Echo client program
-import socket, sys, re
-sys.path.append("../lib")       # for params
 import params
+import socket, sys, re
+sys.path.append("../lib") 
+from framedSock import framedSend, framedReceive
 
 switchesVarDefaults = (
     (('-s', '--server'), 'server', "127.0.0.1:50002"),
-    (('-?', '--usage'), "usage", False), # boolean (set if present)
+    (('-?', '--usage'), "usage", False),
+    (('-d', '--debug'), "debug", False), # boolean (set if present)
     )
+progname = "fileClient"
+paramMap = params.parseParams(switchesVarDefaults)
+server, usage, debug  = paramMap["server"], paramMap["usage"], paramMap["debug"]
+
+if usage:
+    params.usage()
 
 
 progname = "fileClient"
@@ -57,10 +65,9 @@ lines = file.read(1024)
 s.shutdown(socket.SHUT_WR)      # no more output
 
 while (lines):
-    print(lines)
-    s.send(lines)
+    framedReceive(s, debug)
     print("Received '%s'" % lines)
     if len(lines) == 0:
         break
 print("Zero length read.  Closing")
-s.close()
+#s.close()
