@@ -20,9 +20,17 @@ def handle_client(s, addr, i, c):
                     print('Breaking from file write')
                     break
                 else:
-                    print('Received: ', data.decode('utf-8'))
-                    fw.write(data)
-                    print('Wrote to file', data.decode('utf-8'))
+                    decoded_data = data.decode("utf-8")
+                    if not decoded_data:
+                        print("\nconnection with client " + str(i) + " broken\n")
+                        print("  CLIENT " + str(i) + " -> " + decoded_data)
+                        break
+
+                    else:
+                        print('Received: ', decoded_data)
+                        fw.write(data)
+                        print('Wrote to file', decoded_data)
+                    
             fw.close()
             print("Received..")
             decoded_data = data.decode("utf-8")
