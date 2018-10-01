@@ -1,50 +1,18 @@
-#! /usr/bin/env python3
-
-# Echo server program
-import params
-import socket, sys, re
-sys.path.append("../lib")       # for params
-from framedSock import framedSend, framedReceive
-
-switchesVarDefaults = (
-    (('-l', '--listenPort') ,'listenPort', 50002),
-    (('-d', '--debug'), "debug", False), # boolean (set if present)
-    (('-?', '--usage'), "usage", False), # boolean (set if present)
-    )
-
-
-
-progname = "fileserver"
-paramMap = params.parseParams(switchesVarDefaults)
-
-debug, listenPort = paramMap['debug'], paramMap['listenPort']
-
-if paramMap['usage']:
-    params.usage()
-
-listenPort = paramMap['listenPort']
-listenAddr = ''       # Symbolic name meaning all available interfaces
-
-if paramMap['usage']:
-    params.usage()
-
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((listenAddr, listenPort))
-s.listen(1)              # allow only one outstanding request
-# s is a factory for connected sockets
-
-conn, addr = s.accept()  # wait until incoming connection request (and accept it)
-print('Connected by', addr)
+import socket
+ 
+ssFT = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+ssFT.bind((socket.gethostname(), 8756))
+ssFT.listen(1)
 while True:
-    (conn, address) = s.accept()
-    text_file = 'output.txt'
+    (conn, address) = ssFT.accept()
+    text_file = 'fileProj.txt'
  
     #Receive, output and save file
     with open(text_file, "wb") as fw:
         print("Receiving..")
         while True:
             print('receiving')
-            data = conn.recv(32)
+            data = conn.recv(100)
             if data == b'BEGIN':
                 continue
             elif data == b'ENDED':
@@ -74,4 +42,4 @@ while True:
         fa.close()
         print("Sent file.")
     break
-s.close()
+ssFT.close()
