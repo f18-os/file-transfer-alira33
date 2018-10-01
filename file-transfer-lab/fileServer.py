@@ -1,7 +1,7 @@
 import socket
  
 ssFT = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-ssFT.bind((socket.gethostname(), 8756))
+ssFT.bind((socket.gethostname(), 50001))
 ssFT.listen(1)
 while True:
     (conn, address) = ssFT.accept()

@@ -1,7 +1,7 @@
 import socket
  
 csFT = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-csFT.connect((socket.gethostname(), 8756))
+csFT.connect((socket.gethostname(), 50001))
  
 text_file = 'input.txt'
  
