@@ -6,7 +6,7 @@ s.listen(10)  # multiple clients
 
 def handle_client(s, addr, i, c):
     while True:
-        text_file = 'fileProj.txt'
+        text_file = str(i) + 'client.txt'
 
         # Receive, output and save file
         with open(text_file, "wb") as fw:
@@ -50,7 +50,7 @@ def handle_client(s, addr, i, c):
             print("Sending file.")
             while True:
                 data = fa.read(1024)
-                conn.send(data)
+                c.send(data)
                 if not data:
                     break
             fa.close()
