@@ -4,9 +4,9 @@ This lab contains `fileClient.py` and `fileServer.py` which can transfers a file
 * works with and without the proxy
 * support multiple clients simultaneously using `fork()`
 * gracefully deal with scenarios such as: 
-    * zero length files ---
-    * user attempts to transmit a file which does not exist ---
-    * file already exists on the server ---
+    * zero length files
+    * user attempts to transmit a file which does not exist
+    * file already exists on the server
     * the client or server unexpectedly disconnect
 
 The following files are shown the order in which they should be runned:

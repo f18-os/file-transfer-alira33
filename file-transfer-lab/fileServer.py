@@ -6,7 +6,8 @@ s.listen(10)  # multiple clients
 
 def handle_client(s, addr, i, c):
     while True:
-        text_file = str(i) + 'client.txt'
+        # No duplicates of same files
+        text_file = str(i) + 'saveFile.txt'
 
         # Receive, output and save file
         with open(text_file, "wb") as fw:
